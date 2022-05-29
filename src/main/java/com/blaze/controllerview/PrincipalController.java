@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-import com.blaze.algoritimos.SequenciaCor;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
@@ -18,10 +18,16 @@ import javafx.scene.control.TextField;
 
 public class PrincipalController extends Thread {
 
+	// variaveis funcao cor
 	private String corSorteada = "";
 	private String sequenciaCor = "";
+	private boolean avidoCor = false;
+	private int numeroAvisosCor = 0;
+	private int acertosCor = 0;
+	private List<String> listSequenciaCor = new ArrayList<String>();
+	Scanner ler = new Scanner(System.in);
+
 	private boolean primeiraBolaBranca = false;
-	List<String> listSequenciaCor = new ArrayList<String>();
 
 	@FXML
 	private TextField tfSequenciaCor;
@@ -37,7 +43,6 @@ public class PrincipalController extends Thread {
 	private TextField tfNumerosSorteados;
 	@FXML
 	private Button btnIniciar;
-
 	@FXML
 	private Label lbAviso;
 
@@ -104,7 +109,9 @@ public class PrincipalController extends Thread {
 				} catch (Exception e) {
 					System.out.println("erro");
 				}
-
+				// entrada manual para testes
+//				saida = "Girou";
+				
 				if (saida.contains("Girou")) {
 
 					if (saida.length() == 15) {
@@ -114,6 +121,12 @@ public class PrincipalController extends Thread {
 					}
 
 					numeroSorteado = Integer.parseInt(saida);
+
+					// entrada manual para testes
+//					System.out.println("digite o numero");
+//					numeroSorteado = ler.nextInt();
+
+					saida = String.valueOf(numeroSorteado);
 
 					// verifica se saiu a primeia bola branca
 					if (this.primeiraBolaBranca) {
@@ -125,6 +138,11 @@ public class PrincipalController extends Thread {
 						saidaNumeros += ", ";
 
 						this.sequenciaCor(numeroSorteado);
+						
+						if(numeroSorteado == 0) {
+							saidaNumeros = "";
+						}
+
 					} else {
 
 						this.escreveTf(this.tfNumerosSorteados,
@@ -138,10 +156,10 @@ public class PrincipalController extends Thread {
 						}
 					}
 
-					page.waitForTimeout(9000);
+					 page.waitForTimeout(9000);
 				}
 
-				page.waitForTimeout(2000);
+				 page.waitForTimeout(2000);
 
 			}
 
@@ -149,14 +167,15 @@ public class PrincipalController extends Thread {
 
 	}
 
+	// funcao para sequencia de cor
 	private void sequenciaCor(int numeroSorteado) {
 
-		// escreve o numero de seuencias salvas
+		// escreve o numeros na tela
 		this.escreveTf(this.tfNumeroSequenciaSalvaCor, String.valueOf(this.listSequenciaCor.size()));
+		this.escreveTf(this.tfNumeroAcertoCor, String.valueOf(this.acertosCor));
+		this.escreveTf(this.tfNumeroSugestaoCor, String.valueOf(this.numeroAvisosCor));
 
-		// retira mensagem de apostar
-		this.escreveTf(this.tfApostarCor, "");
-
+		// verifica a cor da bola
 		if (numeroSorteado == 0) {
 			this.corSorteada = "B";
 		} else if (numeroSorteado < 8) {
@@ -166,21 +185,62 @@ public class PrincipalController extends Thread {
 			this.corSorteada = "p";
 		}
 
-		if (this.corSorteada.equals("B")) {
-			if (this.listSequenciaCor.contains(this.sequenciaCor)) {
+		// Sorteado bola branca
+		if (numeroSorteado == 0) {
 
-				// mensagem de apostar
-				this.escreveTf(this.tfApostarCor, "Apostar");
+			if (this.avidoCor) {
+				// soma acertos de cor
+				this.acertosCor += 1;
+				// escreve na tela nomero de acerto de cor
+				this.escreveTf(this.tfNumeroAcertoCor, String.valueOf(this.acertosCor));
+
+			}
+
+			if (this.sequenciaCor.length() > 4 && !this.listSequenciaCor.contains(sequenciaCor)) {
+
+				// add sequencia na lista
+				this.listSequenciaCor.add(this.sequenciaCor);
+
+				// escreve o numero de sequencias salvas
+				this.escreveTf(this.tfNumeroSequenciaSalvaCor, String.valueOf(this.listSequenciaCor.size()));
+				// limpa sequencia de cor
+				this.sequenciaCor = "";
+				this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
+				
+				
 
 			} else {
-				this.listSequenciaCor.add(this.sequenciaCor);
+				// limpa sequencia de cor
 				this.sequenciaCor = "";
+				this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
+
 			}
+		} else {
+
+			// escreve a sequencia na tela
+			this.sequenciaCor += this.corSorteada;
+			this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
+		}
+
+		// verifica sequencia
+		if (this.listSequenciaCor.contains(sequenciaCor)) {
+
+			// mensagem de apostar
+			this.escreveTf(this.tfApostarCor, "Apostar");
+
+			// soma numero de avisos
+			this.numeroAvisosCor += 1;
+
+			// escreve numero de avisos na tela
+			this.escreveTf(this.tfNumeroSugestaoCor, String.valueOf(this.numeroAvisosCor));
+
+			this.avidoCor = true;
 
 		} else {
 
-			this.sequenciaCor += this.corSorteada;
-			this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
+			// retira mensagem de apostar
+			this.escreveTf(this.tfApostarCor, "");
+			this.avidoCor = false;
 
 		}
 
