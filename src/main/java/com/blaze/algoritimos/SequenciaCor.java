@@ -1,4 +1,4 @@
-package com.blaze.roleta;
+package com.blaze.algoritimos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.microsoft.playwright.Playwright;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class Roleta extends Thread {
+public class SequenciaCor extends Thread {
 
 	private TextField tfSequenciaCor;
 
@@ -27,19 +27,21 @@ public class Roleta extends Thread {
 	private String sequenciaCor = "";
 	List<String> listSequenciaCor = new ArrayList<String>();
 
-	private TextField tfNumerosSorteados;
+	private int numeroSorteado;
 	
 
 
-	public Roleta(TextField tfSequenciaCor, TextField tfNumeroSequenciaSalvaCor, TextField tfNumeroSugestaoCor,
-			TextField tfNumeroAcertoCor, TextField tfApostarCor, TextField tfNumerosSorteados) {
+	public SequenciaCor(TextField tfSequenciaCor, TextField tfNumeroSequenciaSalvaCor, TextField tfNumeroSugestaoCor,
+			TextField tfNumeroAcertoCor, TextField tfApostarCor, int numeroSorteado) {
 	
 		this.tfSequenciaCor = tfSequenciaCor;
 		this.tfNumeroSequenciaSalvaCor = tfNumeroSequenciaSalvaCor;
 		this.tfNumeroSugestaoCor = tfNumeroSugestaoCor;
 		this.tfNumeroAcertoCor = tfNumeroAcertoCor;
 		this.tfApostarCor = tfApostarCor;
-		this.tfNumerosSorteados = tfNumerosSorteados;
+		this.numeroSorteado = numeroSorteado;
+		start();
+		
 	}
 
 	@Override
@@ -55,59 +57,9 @@ public class Roleta extends Thread {
 
 	}
 
+	
+
 	private void inicio() {
-
-		try (Playwright playwright = Playwright.create()) {
-			Browser browser = playwright.chromium()
-					.launch(new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(50));
-			Page page = browser.newPage();
-			page.navigate("https://blaze.com/pt/games/double");
-
-			String saida = "";
-			String saidaNumeros = "";
-			int numeroSorteado;
-
-			while (true) {
-
-				try {
-
-					saida = page.locator("#roulette-timer > div.time-left").textContent();
-
-				} catch (Exception e) {
-					System.out.println("erro");
-				}
-
-				if (saida.contains("Girou")) {
-
-					if (saida.length() == 15) {
-						saida = saida.substring(12, 14);
-					} else {
-						saida = saida.substring(12, 13);
-					}
-
-					saidaNumeros += saida;
-					
-					this.escreveTf(this.tfNumerosSorteados, saidaNumeros);
-
-					saidaNumeros += ", ";
-
-					numeroSorteado = Integer.parseInt(saida);
-
-					this.sequenciaCor(numeroSorteado);
-
-
-					page.waitForTimeout(9000);
-				}
-
-				page.waitForTimeout(2000);
-
-			}
-
-		}
-
-	}
-
-	private void sequenciaCor(int numeroSorteado) {
 		
 		//escreve o numero de seuencias salvas
 		this.escreveTf(this.tfNumeroSequenciaSalvaCor, String.valueOf(this.listSequenciaCor.size()));

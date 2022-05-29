@@ -2,16 +2,26 @@ package com.blaze.controllerview;
 
 import javafx.fxml.FXML;
 
-import com.blaze.roleta.Roleta;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.blaze.algoritimos.SequenciaCor;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class PrincipalController {
+public class PrincipalController extends Thread {
 
-	private Roleta roleta;
+	private String corSorteada = "";
+	private String sequenciaCor = "";
+	private boolean primeiraBolaBranca = false;
+	List<String> listSequenciaCor = new ArrayList<String>();
 
 	@FXML
 	private TextField tfSequenciaCor;
@@ -28,7 +38,23 @@ public class PrincipalController {
 	@FXML
 	private Button btnIniciar;
 
+	@FXML
+	private Label lbAviso;
+
 	public PrincipalController() {
+
+	}
+
+	@Override
+	public void run() {
+
+		try {
+
+			this.monitoraNumeros();
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
@@ -36,11 +62,7 @@ public class PrincipalController {
 	@FXML
 	public void onBtnIniciar(ActionEvent event) {
 
-		roleta = new Roleta(tfSequenciaCor, tfNumeroSequenciaSalvaCor, tfNumeroSugestaoCor, tfNumeroAcertoCor,
-				tfApostarCor, tfNumerosSorteados);
-
-		roleta.start();
-
+		start();
 		this.btnIniciar.setDisable(true);
 
 	}
@@ -55,5 +77,120 @@ public class PrincipalController {
 	@FXML
 	public void btnSair(ActionEvent event) {
 		System.exit(0);
+	}
+
+	private void monitoraNumeros() {
+
+		this.escreveTf(this.tfNumerosSorteados, "Conectando ao site ...");
+
+		try (Playwright playwright = Playwright.create()) {
+			Browser browser = playwright.chromium()
+					.launch(new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(50));
+			Page page = browser.newPage();
+			page.navigate("https://blaze.com/pt/games/double");
+
+			String saida = "";
+			String saidaNumeros = "";
+			int numeroSorteado;
+
+			this.escreveTf(this.tfNumerosSorteados, "Esperando primeira bola Branca");
+
+			while (true) {
+
+				try {
+
+					saida = page.locator("#roulette-timer > div.time-left").textContent();
+
+				} catch (Exception e) {
+					System.out.println("erro");
+				}
+
+				if (saida.contains("Girou")) {
+
+					if (saida.length() == 15) {
+						saida = saida.substring(12, 14);
+					} else {
+						saida = saida.substring(12, 13);
+					}
+
+					numeroSorteado = Integer.parseInt(saida);
+
+					// verifica se saiu a primeia bola branca
+					if (this.primeiraBolaBranca) {
+
+						saidaNumeros += saida;
+
+						this.escreveTf(this.tfNumerosSorteados, saidaNumeros);
+
+						saidaNumeros += ", ";
+
+						this.sequenciaCor(numeroSorteado);
+					} else {
+
+						this.escreveTf(this.tfNumerosSorteados,
+								"Esperando primeira bola Branca, Numero sorteado: " + numeroSorteado);
+
+						if (numeroSorteado == 0) {
+							// set valor depois da primeira bola branca
+							this.escreveTf(this.tfNumerosSorteados, "");
+							this.primeiraBolaBranca = true;
+
+						}
+					}
+
+					page.waitForTimeout(9000);
+				}
+
+				page.waitForTimeout(2000);
+
+			}
+
+		}
+
+	}
+
+	private void sequenciaCor(int numeroSorteado) {
+
+		// escreve o numero de seuencias salvas
+		this.escreveTf(this.tfNumeroSequenciaSalvaCor, String.valueOf(this.listSequenciaCor.size()));
+
+		// retira mensagem de apostar
+		this.escreveTf(this.tfApostarCor, "");
+
+		if (numeroSorteado == 0) {
+			this.corSorteada = "B";
+		} else if (numeroSorteado < 8) {
+
+			this.corSorteada = "v";
+		} else {
+			this.corSorteada = "p";
+		}
+
+		if (this.corSorteada.equals("B")) {
+			if (this.listSequenciaCor.contains(this.sequenciaCor)) {
+
+				// mensagem de apostar
+				this.escreveTf(this.tfApostarCor, "Apostar");
+
+			} else {
+				this.listSequenciaCor.add(this.sequenciaCor);
+				this.sequenciaCor = "";
+			}
+
+		} else {
+
+			this.sequenciaCor += this.corSorteada;
+			this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
+
+		}
+
+	}
+
+	private void escreveTf(TextField tf, String msg) {
+
+		tf.setEditable(true);
+		tf.setText(msg);
+		tf.setEditable(false);
+
 	}
 }
