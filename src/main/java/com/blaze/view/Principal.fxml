@@ -21,57 +21,92 @@
                      <content>
                         <Pane prefHeight="655.0" prefWidth="1196.0">
                            <children>
-                              <Label fx:id="lbAviso" layoutX="14.0" layoutY="14.0" text="Numeros Sorteados:" textAlignment="RIGHT" wrapText="true">
+                              <Label fx:id="lbAviso" layoutX="14.0" layoutY="38.0" text="Numeros Sorteados:" textAlignment="RIGHT" wrapText="true">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfSequenciaCor" editable="false" layoutX="15.0" layoutY="126.0" prefHeight="40.0" prefWidth="782.0">
+                              <TextField fx:id="tfSequenciaCor" editable="false" layoutX="15.0" layoutY="150.0" prefHeight="40.0" prefWidth="756.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="tfNumerosSorteados" editable="false" layoutX="11.0" layoutY="44.0" prefHeight="40.0" prefWidth="1180.0">
+                              <TextField fx:id="tfNumerosSorteados" editable="false" layoutX="11.0" layoutY="68.0" prefHeight="40.0" prefWidth="1180.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <Label layoutX="15.0" layoutY="100.0" prefHeight="26.0" text="Sequencia Cor:" textAlignment="RIGHT" wrapText="true">
+                              <Label layoutX="15.0" layoutY="124.0" prefHeight="26.0" text="Sequencia Cor:" textAlignment="RIGHT" wrapText="true">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="813.0" layoutY="100.0" prefHeight="26.0" text="n Seq salva" textAlignment="RIGHT" wrapText="true">
+                              <Label layoutX="813.0" layoutY="124.0" prefHeight="26.0" text="n Seq salvas" textAlignment="RIGHT" wrapText="true">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfNumeroSequenciaSalvaCor" editable="false" layoutX="826.0" layoutY="126.0" prefHeight="40.0" prefWidth="40.0">
+                              <TextField fx:id="tfNumeroSequenciaSalvaCor" editable="false" layoutX="820.0" layoutY="150.0" prefHeight="40.0" prefWidth="65.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="tfNumeroSugestaoCor" editable="false" layoutX="906.0" layoutY="126.0" prefHeight="40.0" prefWidth="40.0">
+                              <TextField fx:id="tfNumeroSugestaoCor" editable="false" layoutX="906.0" layoutY="150.0" prefHeight="40.0" prefWidth="65.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <Label layoutX="900.0" layoutY="100.0" prefHeight="26.0" text="sugestão" textAlignment="RIGHT" wrapText="true">
+                              <Label layoutX="910.0" layoutY="124.0" prefHeight="26.0" text="Sugestão" textAlignment="RIGHT" wrapText="true">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfNumeroAcertoCor" editable="false" layoutX="975.0" layoutY="125.0" prefHeight="40.0" prefWidth="40.0">
+                              <TextField fx:id="tfNumeroAcertoCor" editable="false" layoutX="988.0" layoutY="149.0" prefHeight="40.0" prefWidth="65.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <Label layoutX="975.0" layoutY="99.0" prefHeight="26.0" text="Acertos" textAlignment="RIGHT" wrapText="true">
+                              <Label layoutX="993.0" layoutY="123.0" prefHeight="26.0" text="Acertos" textAlignment="RIGHT" wrapText="true">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfApostarCor" editable="false" layoutX="1055.0" layoutY="125.0" prefHeight="40.0" prefWidth="111.0">
+                              <TextField fx:id="tfApostarCor" editable="false" layoutX="1077.0" layoutY="149.0" prefHeight="40.0" prefWidth="111.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="tfTotalVermelhas" editable="false" layoutX="473.0" layoutY="14.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="346.0" layoutY="21.0" prefHeight="26.0" text="Vermelhas:" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfTotalPretas" editable="false" layoutX="634.0" layoutY="14.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="556.0" layoutY="21.0" prefHeight="26.0" text="Pretas:" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfTotalBrancas" editable="false" layoutX="811.0" layoutY="14.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="713.0" layoutY="21.0" prefHeight="26.0" text="Brancas:" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfTempo" editable="false" layoutX="1066.0" layoutY="14.0" prefHeight="40.0" prefWidth="119.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>

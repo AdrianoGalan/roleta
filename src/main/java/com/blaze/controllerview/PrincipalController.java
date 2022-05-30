@@ -27,8 +27,30 @@ public class PrincipalController extends Thread {
 	private List<String> listSequenciaCor = new ArrayList<String>();
 	Scanner ler = new Scanner(System.in);
 
+	// Variaveis uso comum
 	private boolean primeiraBolaBranca = false;
+	private int totalBranco = 0;
+	private int totalPreto = 0;
+	private int totalVermelho = 0;
 
+	// Uso Comum
+	@FXML
+	private TextField tfNumerosSorteados;
+	@FXML
+	private Button btnIniciar;
+	@FXML
+	private Label lbAviso;
+	@FXML
+	private TextField tfTotalBrancas;
+	@FXML
+	private TextField tfTotalPretas;
+	@FXML
+	private TextField tfTotalVermelhas;
+	@FXML
+	private TextField tfTempo;
+
+	
+	// sequencia cor
 	@FXML
 	private TextField tfSequenciaCor;
 	@FXML
@@ -39,12 +61,6 @@ public class PrincipalController extends Thread {
 	private TextField tfNumeroAcertoCor;
 	@FXML
 	private TextField tfApostarCor;
-	@FXML
-	private TextField tfNumerosSorteados;
-	@FXML
-	private Button btnIniciar;
-	@FXML
-	private Label lbAviso;
 
 	public PrincipalController() {
 
@@ -111,7 +127,7 @@ public class PrincipalController extends Thread {
 				}
 				// entrada manual para testes
 //				saida = "Girou";
-				
+
 				if (saida.contains("Girou")) {
 
 					if (saida.length() == 15) {
@@ -138,8 +154,8 @@ public class PrincipalController extends Thread {
 						saidaNumeros += ", ";
 
 						this.sequenciaCor(numeroSorteado);
-						
-						if(numeroSorteado == 0) {
+
+						if (numeroSorteado == 0) {
 							saidaNumeros = "";
 						}
 
@@ -156,10 +172,10 @@ public class PrincipalController extends Thread {
 						}
 					}
 
-					 page.waitForTimeout(9000);
+					page.waitForTimeout(9000);
 				}
 
-				 page.waitForTimeout(2000);
+				page.waitForTimeout(2000);
 
 			}
 
@@ -178,11 +194,20 @@ public class PrincipalController extends Thread {
 		// verifica a cor da bola
 		if (numeroSorteado == 0) {
 			this.corSorteada = "B";
-		} else if (numeroSorteado < 8) {
 
+			this.totalBranco += 1;
+			this.escreveTf(tfTotalBrancas, String.valueOf(this.totalBranco));
+
+		} else if (numeroSorteado < 8) {
 			this.corSorteada = "v";
+
+			this.totalVermelho += 1;
+			this.escreveTf(tfTotalVermelhas, String.valueOf(this.totalVermelho));
 		} else {
 			this.corSorteada = "p";
+			
+			this.totalPreto += 1;
+			this.escreveTf(tfTotalPretas, String.valueOf(this.totalPreto) );
 		}
 
 		// Sorteado bola branca
@@ -206,8 +231,6 @@ public class PrincipalController extends Thread {
 				// limpa sequencia de cor
 				this.sequenciaCor = "";
 				this.escreveTf(this.tfSequenciaCor, this.sequenciaCor);
-				
-				
 
 			} else {
 				// limpa sequencia de cor
