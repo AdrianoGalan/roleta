@@ -11,7 +11,6 @@ public class Relogio extends Thread {
 
 	public Relogio(TextField tfTempo) {
 
-
 		this.tfTempo = tfTempo;
 	}
 
@@ -31,26 +30,25 @@ public class Relogio extends Thread {
 	private void inicio() {
 
 		while (true) {
-			
-			segundo += 1;
-			
-			if(segundo == 60) {
-				segundo = 0;
-				minuto += 1;
-				if(minuto == 60) {
-					minuto = 0;
-					hora += 1;
-				}
-			}
-			
-			this.tfTempo.setText(String.valueOf(hora) + ":" + String.valueOf(minuto) + ":" + String.valueOf(segundo));
-		
 			try {
+				segundo += 1;
+
+				if (segundo == 60) {
+					segundo = 0;
+					minuto += 1;
+					if (minuto == 60) {
+						minuto = 0;
+						hora += 1;
+					}
+				}
+
+				this.tfTempo
+						.setText(String.valueOf(hora) + ":" + String.valueOf(minuto) + ":" + String.valueOf(segundo));
 
 				sleep(1000);
 
 			} catch (Exception e) {
-				// TODO: handle exception
+				System.out.println("Erro Relogio");
 			}
 
 		}
