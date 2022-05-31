@@ -1,11 +1,20 @@
 package com.blaze.comum;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import javafx.scene.control.TextField;
 
-public class Relogio extends Thread{
-	
+public class Relogio extends Thread {
+
+	private TextField tfTempo;
+	private int hora = 0;
+	private int minuto = 0;
+	private int segundo = 0;
+
+	public Relogio(TextField tfTempo) {
+
+
+		this.tfTempo = tfTempo;
+	}
+
 	@Override
 	public void run() {
 
@@ -18,14 +27,34 @@ public class Relogio extends Thread{
 		}
 
 	}
-	
+
 	private void inicio() {
+
+		while (true) {
+			
+			segundo += 1;
+			
+			if(segundo == 60) {
+				segundo = 0;
+				minuto += 1;
+				if(minuto == 60) {
+					minuto = 0;
+					hora += 1;
+				}
+			}
+			
+			this.tfTempo.setText(String.valueOf(hora) + ":" + String.valueOf(minuto) + ":" + String.valueOf(segundo));
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-		Calendar data = new GregorianCalendar(2022, 1, 1, 00, 00, 00);
-		
-		System.out.println(sdf.format(data.getTime()));
-		
+			try {
+
+				sleep(1000);
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+		}
+
 	}
 
 }

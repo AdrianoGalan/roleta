@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.blaze.comum.Relogio;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
@@ -32,6 +33,7 @@ public class PrincipalController extends Thread {
 	private int totalBranco = 0;
 	private int totalPreto = 0;
 	private int totalVermelho = 0;
+	private Relogio relogio;
 
 	// Uso Comum
 	@FXML
@@ -49,7 +51,6 @@ public class PrincipalController extends Thread {
 	@FXML
 	private TextField tfTempo;
 
-	
 	// sequencia cor
 	@FXML
 	private TextField tfSequenciaCor;
@@ -61,6 +62,23 @@ public class PrincipalController extends Thread {
 	private TextField tfNumeroAcertoCor;
 	@FXML
 	private TextField tfApostarCor;
+
+	// Soma
+	@FXML
+	private TextField tfSequenciaSoma;
+	@FXML
+	private TextField tfNumeroSequenciaSalvaSoma;
+	@FXML
+	private TextField tfNumeroSugestaoSoma;
+	@FXML
+	private TextField tfNumeroAcertoSoma;
+	@FXML
+	private TextField tfApostarSoma;
+	private List<Integer> listSoma = new ArrayList<Integer>();
+	private int soma = 0;
+	private int numeroAvisosSoma = 0;
+	private int acertosSoma = 0;
+	private boolean avidoSoma = false;
 
 	public PrincipalController() {
 
@@ -85,6 +103,9 @@ public class PrincipalController extends Thread {
 
 		start();
 		this.btnIniciar.setDisable(true);
+
+		this.relogio = new Relogio(this.tfTempo);
+		this.relogio.start();
 
 	}
 
@@ -126,7 +147,7 @@ public class PrincipalController extends Thread {
 					System.out.println("erro");
 				}
 				// entrada manual para testes
-//				saida = "Girou";
+				//saida = "Girou";
 
 				if (saida.contains("Girou")) {
 
@@ -153,8 +174,10 @@ public class PrincipalController extends Thread {
 
 						saidaNumeros += ", ";
 
-						this.sequenciaCor(numeroSorteado);
+						this.soma(numeroSorteado);
 
+						this.sequenciaCor(numeroSorteado);
+						
 						if (numeroSorteado == 0) {
 							saidaNumeros = "";
 						}
@@ -205,9 +228,9 @@ public class PrincipalController extends Thread {
 			this.escreveTf(tfTotalVermelhas, String.valueOf(this.totalVermelho));
 		} else {
 			this.corSorteada = "p";
-			
+
 			this.totalPreto += 1;
-			this.escreveTf(tfTotalPretas, String.valueOf(this.totalPreto) );
+			this.escreveTf(tfTotalPretas, String.valueOf(this.totalPreto));
 		}
 
 		// Sorteado bola branca
@@ -264,6 +287,75 @@ public class PrincipalController extends Thread {
 			// retira mensagem de apostar
 			this.escreveTf(this.tfApostarCor, "");
 			this.avidoCor = false;
+
+		}
+
+	}
+
+	private void soma(int numeroSorteado) {
+
+		// escreve o numeros na tela
+		this.escreveTf(this.tfNumeroSequenciaSalvaSoma, String.valueOf(this.listSoma.size()));
+		this.escreveTf(this.tfNumeroAcertoSoma, String.valueOf(this.acertosSoma));
+		this.escreveTf(this.tfNumeroSugestaoSoma, String.valueOf(this.numeroAvisosSoma));
+
+		this.soma += numeroSorteado;
+
+		if (numeroSorteado == 0) {
+
+			if (this.avidoSoma) {
+				// soma acertos
+				this.acertosSoma += 1;
+				// escreve na tela nomero de acerto
+				this.escreveTf(this.tfNumeroAcertoSoma, String.valueOf(this.acertosSoma));
+
+			}
+
+			if (this.sequenciaCor.length() > 4 && !this.listSoma.contains(this.soma)) {
+
+				// add sequencia na lista
+				this.listSoma.add(this.soma);
+
+				// escreve o numero de sequencias salvas
+				this.escreveTf(this.tfNumeroSequenciaSalvaSoma, String.valueOf(this.listSoma.size()));
+				
+				// sera soma
+				this.soma = 0;
+				this.escreveTf(this.tfSequenciaSoma, "");
+
+			} else {
+				
+				// zera soma 
+				this.soma = 0;
+				this.escreveTf(this.tfSequenciaCor, "");
+
+			}
+		} else {
+
+			// escreve a sequencia na tela
+			this.escreveTf(this.tfSequenciaSoma, String.valueOf(this.soma));
+		}
+		
+
+		// verifica sequencia
+		if (this.listSoma.contains(this.soma)) {
+
+			// mensagem de apostar
+			this.escreveTf(this.tfApostarSoma, "Apostar");
+
+			// soma numero de avisos
+			this.numeroAvisosSoma += 1;
+
+			// escreve numero de avisos na tela
+			this.escreveTf(this.tfNumeroSugestaoSoma, String.valueOf(this.numeroAvisosSoma));
+
+			this.avidoSoma = true;
+
+		} else {
+
+			// retira mensagem de apostar
+			this.escreveTf(this.tfApostarSoma, "");
+			this.avidoSoma = false;
 
 		}
 
