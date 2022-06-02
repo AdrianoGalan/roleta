@@ -1,4 +1,4 @@
-package com.blaze.comum;
+package com.blaze.thread;
 
 import javafx.scene.control.TextField;
 
