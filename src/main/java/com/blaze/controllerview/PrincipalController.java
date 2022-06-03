@@ -21,8 +21,6 @@ import javafx.scene.control.TextField;
 
 public class PrincipalController {
 
-	
-	
 	// Uso Comum
 	@FXML
 	private TextField tfNumerosSorteados;
@@ -72,7 +70,7 @@ public class PrincipalController {
 	// Event Listener on Button.onAction
 	@FXML
 	public void onBtnIniciar(ActionEvent event) {
-		
+
 		this.numerosSorteados("Inicio...");
 
 		Relogio relogio = new Relogio(this.tfTempo);
@@ -97,6 +95,7 @@ public class PrincipalController {
 		System.exit(0);
 	}
 
+	// saida dados commum
 	public void totalBrancas(int total) {
 
 		this.tfTotalBrancas.setText(String.valueOf(total));
@@ -111,29 +110,55 @@ public class PrincipalController {
 
 		this.tfTotalPretas.setText(String.valueOf(total));
 	}
-	
+
 	public void numerosSorteados(String msg) {
 		this.tfNumerosSorteados.setText(msg);
 	}
-	
+
+	// saida algoritmo cor
 	public void numeroSequenciaSalvaCor(int total) {
 		this.tfNumeroSequenciaSalvaCor.setText(String.valueOf(total));
 	}
-	
+
 	public void sequenciaCor(String msg) {
 		this.tfSequenciaCor.setText(msg);
 	}
-	
+
 	public void numeroSugestaoCor(int total) {
 		this.tfNumeroSugestaoCor.setText(String.valueOf(total));
 	}
+
 	public void numeroAcertoCor(int total) {
 		this.tfNumeroAcertoCor.setText(String.valueOf(total));
 	}
+
 	public void apostarCor(String msg) {
 		this.tfApostarCor.setText(msg);
 	}
-	
-	
+
+	// saida algoritimo soma
+
+	public void sequenciaSoma(int total) {
+		this.tfSequenciaSoma.setText(String.valueOf(total));
+
+	}
+
+	public void numeroSequenciaSalvaSoma(int total) {
+		this.tfNumeroSequenciaSalvaSoma.setText(String.valueOf(total));
+	}
+
+	public void numeroSugestaoSoma(int total) {
+		this.tfNumeroSugestaoSoma.setText(String.valueOf(total));
+
+	}
+
+	public void numeroAcertoSoma(int total) {
+		tfNumeroAcertoSoma.setText(String.valueOf(total));
+	}
+
+	public void apostarSoma(String msg) {
+		this.tfApostarSoma.setText(msg);
+
+	}
 
 }
