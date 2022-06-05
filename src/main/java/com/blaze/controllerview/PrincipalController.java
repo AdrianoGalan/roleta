@@ -63,6 +63,18 @@ public class PrincipalController {
 	@FXML
 	private TextField tfApostarSoma;
 
+	// Soma preto / vermelha
+	@FXML
+	private TextField tfSequenciaSomaPV;
+	@FXML
+	private TextField tfNumeroSequenciaSalvaSomaPV;
+	@FXML
+	private TextField tfNumeroSugestaoSomaPV;
+	@FXML
+	private TextField tfNumeroAcertoSomaPV;
+	@FXML
+	private TextField tfApostarSomaPV;
+
 	public PrincipalController() {
 
 	}
@@ -138,10 +150,8 @@ public class PrincipalController {
 	}
 
 	// saida algoritimo soma
-
 	public void sequenciaSoma(int total) {
 		this.tfSequenciaSoma.setText(String.valueOf(total));
-
 	}
 
 	public void numeroSequenciaSalvaSoma(int total) {
@@ -159,7 +169,28 @@ public class PrincipalController {
 
 	public void apostarSoma(String msg) {
 		this.tfApostarSoma.setText(msg);
-
 	}
 
+	
+	// saida algoritimo soma preto vermelha
+		public void sequenciaSomaPV(String msg) {
+			this.tfSequenciaSomaPV.setText(msg);
+		}
+
+		public void numeroSequenciaSalvaSomaPV(int total) {
+			this.tfNumeroSequenciaSalvaSomaPV.setText(String.valueOf(total));
+		}
+
+		public void numeroSugestaoSomaPV(int total) {
+			this.tfNumeroSugestaoSomaPV.setText(String.valueOf(total));
+
+		}
+
+		public void numeroAcertoSomaPV(int total) {
+			tfNumeroAcertoSomaPV.setText(String.valueOf(total));
+		}
+
+		public void apostarSomaPV(String msg) {
+			this.tfApostarSomaPV.setText(msg);
+		}
 }

@@ -44,7 +44,7 @@ public class Soma {
 				this.listSequenciaSoma.add(this.soma);
 
 				// escreve o numero de sequencias salvas
-				this.pc.numeroSequenciaSalvaCor(this.listSequenciaSoma.size());
+				this.pc.numeroSequenciaSalvaSoma(this.listSequenciaSoma.size());
 
 				// limpa
 				this.soma = 0;

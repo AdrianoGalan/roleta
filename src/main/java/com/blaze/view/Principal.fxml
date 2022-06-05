@@ -160,6 +160,52 @@
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
+                              <Separator layoutX="14.0" layoutY="285.0" prefHeight="10.0" prefWidth="1170.0" />
+                              <TextField fx:id="tfSequenciaSomaPV" editable="false" layoutX="14.0" layoutY="319.0" prefHeight="40.0" prefWidth="756.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="14.0" layoutY="293.0" prefHeight="26.0" text="Soma preta / vermelha" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="829.0" layoutY="293.0" prefHeight="26.0" text="Salvo" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfNumeroSequenciaSalvaSomaPV" editable="false" layoutX="819.0" layoutY="319.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="tfNumeroSugestaoSomaPV" editable="false" layoutX="905.0" layoutY="319.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="909.0" layoutY="293.0" prefHeight="26.0" text="Sugestão" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfNumeroAcertoSomaPV" editable="false" layoutX="987.0" layoutY="318.0" prefHeight="40.0" prefWidth="65.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Label layoutX="992.0" layoutY="292.0" prefHeight="26.0" text="Acertos" textAlignment="RIGHT" wrapText="true">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfApostarSomaPV" editable="false" layoutX="1076.0" layoutY="318.0" prefHeight="40.0" prefWidth="111.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
                            </children>
                         </Pane>
                      </content>

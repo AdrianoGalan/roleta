@@ -3,6 +3,7 @@ package com.blaze.controller;
 
 import com.blaze.algoritmos.SequenciaCor;
 import com.blaze.algoritmos.Soma;
+import com.blaze.algoritmos.SomaPretaVermelha;
 import com.blaze.controllerview.PrincipalController;;
 
 public class NumerosSorteados {
@@ -13,12 +14,14 @@ public class NumerosSorteados {
 	//algoritmos
 	private SequenciaCor sCor;
 	private Soma soma;
+	private SomaPretaVermelha somaPV;
 
 	public NumerosSorteados(PrincipalController pc) {
 
 		this.pc = pc;
 		this.sCor = new SequenciaCor(this.pc);
 		this.soma = new Soma(this.pc);
+		this.somaPV = new SomaPretaVermelha(this.pc);
 	}
 
 	public boolean primeiraBranca(int numeroSorteado) {
@@ -38,6 +41,8 @@ public class NumerosSorteados {
 			//chama algoritimos passando o numero
 			this.sCor.verificaCor(numeroSorteado);
 			this.soma.verificaSoma(numeroSorteado);
+			this.somaPV.verificaSomaPretoVermelha(numeroSorteado);
+			
 
 			if (numeroSorteado == 0) {
 			

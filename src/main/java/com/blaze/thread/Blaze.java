@@ -107,7 +107,7 @@ public class Blaze extends Thread {
 
 							this.primeiraBolaBranca = this.ns.primeiraBranca(numeroSorteado);
 
-							this.pc.numerosSorteados("Esperando primeira bola ...Numero sorteado " + numeroSorteado);
+							this.pc.numerosSorteados("Esperando primeira bola branca ...Numero sorteado " + numeroSorteado);
 						}
 
 						page.waitForTimeout(9000);
