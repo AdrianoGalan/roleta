@@ -80,6 +80,7 @@ public class PrincipalController {
 		blaze.start();
 
 		this.btnIniciar.setDisable(true);
+		this.checkEntradamanial.setDisable(true);
 
 	}
 

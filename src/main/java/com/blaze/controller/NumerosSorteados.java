@@ -37,6 +37,7 @@ public class NumerosSorteados {
 			
 			//chama algoritimos passando o numero
 			this.sCor.verificaCor(numeroSorteado);
+			this.soma.verificaSoma(numeroSorteado);
 
 			if (numeroSorteado == 0) {
 			

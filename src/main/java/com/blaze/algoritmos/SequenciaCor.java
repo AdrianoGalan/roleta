@@ -26,11 +26,6 @@ public class SequenciaCor {
 
 	public void verificaCor(int numeroSorteado) {
 
-		// escreve o numeros na tela
-		this.pc.numeroSequenciaSalvaCor(this.listSequenciaCor.size());
-		this.pc.numeroAcertoCor(this.numeroAcerto);
-		this.pc.numeroSugestaoCor(this.numeroSugestao);
-
 		// verifica a cor da bola
 		if (numeroSorteado == 0) {
 			this.corSorteada = "B";
@@ -96,7 +91,6 @@ public class SequenciaCor {
 
 			// escreve numero de avisos na tela
 			this.pc.numeroSugestaoCor(this.numeroSugestao);
-			;
 
 			this.apostar = true;
 
@@ -107,6 +101,11 @@ public class SequenciaCor {
 			this.apostar = false;
 
 		}
+
+		// escreve o numeros na tela
+		this.pc.numeroSequenciaSalvaCor(this.listSequenciaCor.size());
+		this.pc.numeroAcertoCor(this.numeroAcerto);
+		this.pc.numeroSugestaoCor(this.numeroSugestao);
 
 	}
 

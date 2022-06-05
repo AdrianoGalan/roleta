@@ -11,82 +11,86 @@ public class Soma {
 
 	private int numeroSugestao = 0;
 	private int numeroAcerto = 0;
-	private String corSorteada = "";
+	private int soma = 0;
 	private boolean apostar = false;
-	
-	private List<String> listSequenciaSoma;
-	private String sequenciaSoma = "";
+
+	private List<Integer> listSequenciaSoma;
+	private int totalNumerosSomados = 0;
 
 	public Soma(PrincipalController pc) {
 		this.pc = pc;
-		this.listSequenciaSoma = new ArrayList<String>();
-		
+		this.listSequenciaSoma = new ArrayList<Integer>();
+
 	}
 
 	public void verificaSoma(int numeroSorteado) {
 
+		this.totalNumerosSomados += 1;
+
+		// Sorteado bola branca
+		if (numeroSorteado == 0) {
+
+			if (this.apostar) {
+				// soma acertos de soma
+				this.numeroAcerto += 1;
+				// escreve na tela nomero de acerto de soma
+				this.pc.numeroAcertoSoma(this.numeroAcerto);
+
+			}
+
+			if (this.totalNumerosSomados > 3 && !this.listSequenciaSoma.contains(soma)) {
+
+				// add sequencia na lista
+				this.listSequenciaSoma.add(this.soma);
+
+				// escreve o numero de sequencias salvas
+				this.pc.numeroSequenciaSalvaCor(this.listSequenciaSoma.size());
+
+				// limpa
+				this.soma = 0;
+				this.totalNumerosSomados = 0;
+				this.pc.sequenciaSoma(this.soma);
+
+			} else {
+				// limpa
+				this.soma = 0;
+				this.totalNumerosSomados = 0;
+				this.pc.sequenciaSoma(this.soma);
+
+			}
+		} else {
+
+			// escreve a sequencia na tela
+			this.soma += numeroSorteado;
+			this.pc.sequenciaSoma(this.soma);
+		}
+
+		// verifica sequencia
+		if (this.listSequenciaSoma.contains(this.soma)) {
+
+			// mensagem de apostar
+			this.pc.apostarSoma("APOSTAR");
+
+			// soma numero de avisos
+			this.numeroSugestao += 1;
+
+			// escreve numero de avisos na tela
+			this.pc.numeroSugestaoSoma(this.numeroSugestao);
+			;
+
+			this.apostar = true;
+
+		} else {
+
+			// retira mensagem de apostar
+			this.pc.apostarSoma("");
+			this.apostar = false;
+
+		}
 		// escreve o numeros na tela
-		this.pc.numeroSequenciaSalvaSoma(numeroSorteado);
+		this.pc.numeroSequenciaSalvaSoma(this.listSequenciaSoma.size());
 		this.pc.numeroAcertoSoma(this.numeroAcerto);
 		this.pc.numeroSugestaoSoma(this.numeroSugestao);
-		
-		// Sorteado bola branca
-				if (numeroSorteado == 0) {
-
-					if (this.apostar) {
-						// soma acertos de cor
-						this.numeroAcerto += 1;
-						// escreve na tela nomero de acerto de cor
-						this.pc.numeroAcertoSoma(this.numeroAcerto);
-
-					}
-
-					if (this.sequenciaSoma.length() > 3 && !this.listSequenciaSoma.contains(sequenciaSoma)) {
-
-						// add sequencia na lista
-						this.listSequenciaSoma.add(this.sequenciaSoma);
-
-						// escreve o numero de sequencias salvas
-						this.pc.numeroSequenciaSalvaCor(this.listSequenciaSoma.size());
-						// limpa sequencia de cor
-						this.sequenciaSoma = "";
-						this.pc.sequenciaCor(this.sequenciaSoma);
-
-					} else {
-						// limpa sequencia de cor
-						this.sequenciaSoma = "";
-						this.pc.sequenciaCor(this.sequenciaSoma);
-
-					}
-				} else {
-
-					// escreve a sequencia na tela
-					this.sequenciaSoma += this.corSorteada;
-					this.pc.sequenciaCor(this.sequenciaSoma);
-				}
-
-				// verifica sequencia
-				if (this.listSequenciaSoma.contains(sequenciaSoma)) {
-
-					// mensagem de apostar
-					this.pc.apostarCor("APOSTAR");
-
-					// soma numero de avisos
-					this.numeroSugestao += 1;
-
-					// escreve numero de avisos na tela
-					this.pc.numeroSugestaoCor(this.numeroSugestao);
-					;
-
-					this.apostar = true;
-
-				} else {
-
-					// retira mensagem de apostar
-					this.pc.apostarCor("");
-					this.apostar = false;
-
-				}
 
 	}
 
